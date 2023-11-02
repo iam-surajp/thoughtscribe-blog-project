@@ -1,0 +1,82 @@
+{%extends "blog/base.html"%} {%block title%}ThoughtScribe{%endblock%}
+<!-- Set up your HTML -->
+{%block content%}
+
+<!-- Set up your HTML -->
+<div
+  class="owl-carousel center"
+  style="width: 90%; margin: auto; margin-top: 10px"
+>
+  {%for cat in categories%}
+  <div class="card item">
+    <div class="img-container">
+      <img
+        src="/media/{{cat.images}}"
+        class="responsive-img"
+        title="carousel-img"
+      />
+    </div>
+    <div
+      class="card-content"
+      style="margin-top: 0px; align-items: center; justify-content: center"
+    >
+      <div class="card-title">{{cat.title}}</div>
+      <p class="truncate">{{cat.description}}</p>
+      <div class="container center" style="margin: auto">
+        <a
+          href="/category/{{cat.c_id}}"
+          class="btn"
+          style="background-color: orange; margin-top: 10px"
+          >Explore</a
+        >
+      </div>
+    </div>
+  </div>
+  {%endfor%}
+</div>
+
+<div class="container home">
+  <div class="row" style="width: 80%">
+    <div class="col s12">
+      {%for post in posts%}
+      <div class="row" style="">
+        <div class="card my-3 shadow" style="width: 100%">
+          <div
+            class="card-body"
+            style="
+              box-shadow: 10px 10px 5px lightblue;
+              background-color: rgb(254, 246, 224);
+            "
+          >
+            <div class="col s8">
+              <span class="h6" style="color: grey"
+                >{{post.author}} ,{{post.date}}</span
+              >
+              <hr />
+              <h5 style="color: rgb(108, 21, 27); font-weight: 600">
+                {{post.title}}
+              </h5>
+              <hr />
+              <p>{{post.content |truncatewords:60|safe}}</p>
+              <div
+                class="container"
+                style="align-items: center; justify-content: center"
+              >
+                <a href="/blog/{{post.id}}" class="btn">Read More</a>
+              </div>
+            </div>
+            <div class="col s4">
+              <img
+                src="/media/{{post.pictures}}"
+                class="responsive-img"
+                title="post-img"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      {%endfor%}
+    </div>
+  </div>
+</div>
+{%endblock%}

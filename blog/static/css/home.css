@@ -1,0 +1,29 @@
+img[title="post-img"]{
+    margin-top: 50px;
+    height: 200px; 
+    width: 100%;  
+    border-radius: 10px;
+
+}
+
+img[title="carousel-img"]{
+
+    /* margin: auto;
+    margin-bottom: 0; */
+    width:80%;
+    height: 95%;
+    /* object-fit:contain; */
+}
+
+.img-container{
+    height: 250px;
+    margin: 0;
+    /* width: 400px; */
+    align-items: center;
+    justify-content: center;   
+}
+ 
+.item{
+    margin-left: 10px;
+    /* height:350px; */
+}

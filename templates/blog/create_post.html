@@ -1,0 +1,41 @@
+{%extends "blog/base.html"%} {%block title%}ThoughtScribe{%endblock%}
+<!-- Set up your HTML -->
+{%load crispy_forms_tags%}
+<!-- Set up your HTML -->
+{%block content%}
+
+<style>
+  body {
+    background-color: rgb(185, 208, 244);
+  }
+
+  label {
+    color: black;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  h3 {
+    text-align: center;
+    color: DarkGreen;
+    font-weight: 500;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+</style>
+
+<div class="container" style="width: 60%; background-color: rgb(185, 208, 244)">
+  <h3 style="">Create Blog</h3>
+  <div class="card my-3 shadow" style="border-radius: 15px">
+    <div class="card-body" style="">
+      <form method="POST" style="font-size: 15px" enctype="multipart/form-data">
+        {%csrf_token%} {{form.media}} {{form|crispy}}
+        <input
+          class="btn btn-primary btn-block"
+          type="submit"
+          value="Post"
+          style="width: 80%; margin: auto"
+        />
+      </form>
+    </div>
+  </div>
+</div>
+{%endblock%}

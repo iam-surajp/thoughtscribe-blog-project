@@ -1,0 +1,61 @@
+{%extends "blog/base.html"%} {%block title%}Login{%endblock%}
+<!-- Set up your HTML -->
+{%load crispy_forms_tags%}
+<!-- Set up your HTML -->
+{% block content%}
+
+<style>
+  label {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  body {
+    background: url("/media/background1.avif");
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+</style>
+
+<div class="cover">
+  <div class="container" style="padding: 10px">
+    <div class="row mt-5 pt-3">
+      <div class="col-md-5 offset-md-6">
+        <div class="card my-3 shadow">
+          <div class="card-body" style="padding: 10px">
+            <h4 style="text-align: center; color: SlateBlue; font-weight: 500">
+              Login Page
+            </h4>
+            <hr />
+            <form method="POST">
+              {% csrf_token %} {{form|crispy}}
+              <div class="text-center">
+                <input
+                  class="btn btn-primary btn-block"
+                  type="submit"
+                  value="Login"
+                  style="background-color: DodgerBlue; width: 90%; margin: auto"
+                />
+              </div>
+            </form>
+
+            <div class="text-center my-3" style="">
+              <hr />
+              <a href="{%url 'password_reset' %}" class="">Forgot Password?</a>
+            </div>
+
+            <div class="text-center">
+              <hr />
+              <a class="btn btn-success" href="{%url 'user_sign_up'%}" style="">
+                Create an account
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

@@ -1,0 +1,49 @@
+{% load static %} <link rel="stylesheet" href="{% static "css/style.css"%}">
+
+
+
+<!-- Dropdown Structure -->
+<ul id="dropdown1" class="dropdown-content">
+  {%for cat in categories %}
+  <li><a href="/category/{{cat.c_id}}">{{cat.title}}</a></li>
+  {%endfor%}
+</ul>
+
+<ul id="dropdown2" class="dropdown-content">
+  <li><a href="{%url 'users-profile'%}">See Profile</a></li>
+  <li><a href="{%url 'users-logout'%}">Logout</a></li>
+</ul>
+
+<nav class="nav-bg" style="background-color:rgb(154, 19, 57);">
+  
+  <div class="container" title="nav_container">
+    {%if request.user.is_authenticated%}
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo">ThoughtScribe</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/home">Home</a></li>
+        <li><a href="/admin">Admin</a></li>
+        <li><a href="/create_post">Create blog</a></li>
+        <li>
+          <a class="dropdown-trigger" href="#!" data-target="dropdown1"
+            >Categories<i class="material-icons right">arrow_drop_down</i></a
+          >
+        </li>
+        <li>
+          <a class="dropdown-trigger" href="#!" data-target="dropdown2"
+            >Profile<i class="material-icons right">arrow_drop_down</i></a
+          >
+        </li>
+        <!-- Dropdown Trigger -->
+      </ul>
+    </div>
+      {%else%}
+  <div class="nav-wrapper">
+    <a href="#!" class="brand-logo">ThoughtScribe</a>
+    <ul class="right hide-on-med-and-down">
+      <li><a href="{% url 'user_sign_up'%}">Signup</a></li>
+      <li><a href="{%url 'users-login'%}">Login</a></li>
+  {%endif%}
+  </div>
+
+</nav>

@@ -1,0 +1,48 @@
+{%extends "blog/base.html"%} {%block title%}Sign Up{%endblock%}
+<!-- Set up your HTML -->
+{%load crispy_forms_tags%}
+<!-- Set up your HTML -->
+{% block content%}
+
+<style>
+  label {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  body {
+    background: url("/media/background1.avif");
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+</style>
+
+<div class="cover">
+  <div class="container" style="padding: 10px">
+    <div class="row mt-5 pt-3">
+      <div class="col-md-6 offset-md-6">
+        <div class="card my-3 shadow">
+          <div class="card-body" style="">
+            <h4 style="text-align: center; color: SlateBlue; font-weight: 500">
+              Sign Up Page
+            </h4>
+            <hr />
+            <form method="POST">
+              {% csrf_token %} {{form|crispy}}
+
+              <input
+                class="btn btn-primary btn-block"
+                type="submit"
+                value="Register"
+                style="width: 80%; margin: auto"
+              />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

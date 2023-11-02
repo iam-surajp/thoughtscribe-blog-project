@@ -1,0 +1,35 @@
+{%extends "blog/base.html"%} {%block title%}Login{%endblock%}
+<!-- Set up your HTML -->
+{%load crispy_forms_tags%}
+<!-- Set up your HTML -->
+{% block content%}
+<div class="container" style="">
+  <div class="row mt-5 pt-3">
+    <div class="col-md-5 offset-md-3">
+      <div class="card my-3 shadow">
+        <div class="card-body" style="padding: 10px">
+          <h6 style="font-weight: 400; text-align: center">
+            Thanks, Visit Again.
+          </h6>
+          <div
+            class="alert alert-info"
+            style="
+              background-color: rgb(185, 225, 246);
+              color: rgb(59, 184, 86);
+              padding: 20px;
+              margin: 10px;
+              font-size: 20px;
+            "
+          >
+            You have been logged out.
+          </div>
+          <label style="margin: 10px; font-size: 15px"
+            >Click to
+            <a href="{%url 'users-login'%}" style="font-size: 15px">Login</a>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

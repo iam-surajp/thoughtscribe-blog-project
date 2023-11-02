@@ -1,0 +1,28 @@
+{%extends "blog/base.html"%} {%block title%}ThoughtScribe{%endblock%} {%load static%}
+{%block content%}
+<div class="container" title="category_detail">
+  <h3 style="text-align: center; color: SlateBlue; font-weight: 500">
+    {{cat.title}}
+  </h3>
+  <div
+    class="img-container"
+    style="align-items: center; justify-content: center"
+  >
+    <img
+      src="/media/{{cat.images}}"
+      class="responsive-img"
+      style="max-height: 400px; width: 90%; object-fit: cover;margin:auto;"
+    />
+  </div><br></br><br></br><br></br><br></br>
+  <h4>Posts related to this category:</h4>
+  <div class="collection">
+    {%for item in posts%}
+    <a href="/blog/{{item.id}}" class="collection-item">{{item.title}}</a>
+  
+    {%empty%}
+    <h5>No posts in this category</h5>
+    {%endfor%}
+</div>
+  </div>
+</div>
+{% endblock %}
