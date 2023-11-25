@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from .forms import SignUpForm
+from .forms import SignUpForm, UserUpdateForm, ProfileUpdateForm
 from blog.models import categoryModel
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -27,3 +26,25 @@ def profile(request):
     categories = categoryModel.objects.all()
 
     return render(request, 'users/profile.html', {'categories': categories})
+
+
+@login_required
+def edit_profile(request):
+    categories = categoryModel.objects.all()
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST or None, instance=request.user)
+        p_form = ProfileUpdateForm(
+            request.POST or None, request.FILES or None, instance=request.user.profilemodel)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            return redirect('users-profile')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profilemodel)
+    context = {
+        'u_form': u_form,
+        'p_form': p_form,
+        'categories': categories,
+    }
+    return render(request, 'users/edit_profile.html', context)

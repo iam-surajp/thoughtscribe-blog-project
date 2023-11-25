@@ -38,7 +38,7 @@
 <div class="container home">
   <div class="row" style="width: 80%">
     <div class="col s12">
-      {%for post in posts%}
+      {%for post in final_posts%}
       <div class="row" style="">
         <div class="card my-3 shadow" style="width: 100%">
           <div
@@ -79,4 +79,27 @@
     </div>
   </div>
 </div>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    {% if final_posts.has_previous%}
+    <li class="page-item">
+      <a
+        class="page-link"
+        href="/home/?page={{final_posts.previous_page_number}}"
+        >Previous</a
+      >
+    </li>
+    {%endif%} {%for n in total_pagelist%}
+    <li class="page-item">
+      <a class="page-link" href="/home/?page={{n}}">{{n}}</a>
+    </li>
+    {%endfor%} {%if final_posts.has_next%}
+    <li class="page-item">
+      <a class="page-link" href="/home/?page={{final_posts.next_page_number}}"
+        >Next</a
+      >
+    </li>
+    {%endif%}
+  </ul>
+</nav>
 {%endblock%}

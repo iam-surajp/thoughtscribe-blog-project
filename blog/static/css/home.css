@@ -8,11 +8,9 @@ img[title="post-img"]{
 
 img[title="carousel-img"]{
 
-    /* margin: auto;
-    margin-bottom: 0; */
     width:80%;
     height: 95%;
-    /* object-fit:contain; */
+
 }
 
 .img-container{

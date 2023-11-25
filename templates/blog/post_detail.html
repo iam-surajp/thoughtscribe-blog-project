@@ -35,14 +35,16 @@
             {{ c_form|crispy }}
             <input class="btn btn-primary btn-sm" type="submit" value="Comment">
         </form><br></br>
-        <div style="height: 250px; overflow-y: scroll;color:grey" class="card card-body">
-            {% for comment in post.comments %}   
-               <span> {{comment.user.username}} :-<span>
-               <span>{{comment.content}}</span>
-               <br></br>                
+        <div style="height: 250px; overflow-y: scroll;color:grey;background-color:rgb(42,42,42)" class="card card-body">
+            {% for comment in post.comments %}
+                <div style='background-color:rgb(190, 184, 186);margin-bottom:5px;padding:5px;border-radius:5px'>   
+                   <span style='color:SlateBlue;font-weight:500'> {{comment.user.username}} :-<span>
+                   <span style='color:rgb(79, 63, 63);font-weight:400'>{{comment.content}}</span>
+                </div>
+                </br>               
             {% endfor %}
-            </div>
-        </div>  
+        </div>
+    </div>  
   </div> 
 </div>
 

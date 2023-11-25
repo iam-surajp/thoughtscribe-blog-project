@@ -2,18 +2,26 @@ from django.shortcuts import render, redirect
 from blog.models import blogpostModel, categoryModel
 from .forms import blogpostForm, PostUpdateForm, CommentForm
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+
 # Create your views here.
 
 
 @login_required
 def home(request):
     # loading data from database to print it on homepage
-    posts = blogpostModel.objects.all()[:11]
+    posts = blogpostModel.objects.all()
+
+    paginator = Paginator(posts, 7)
+    page_number = request.GET.get('page')
+    final_posts = paginator.get_page(page_number)
+    total_pages = final_posts.paginator.num_pages
 
     categories = categoryModel.objects.all()
     # print(posts)
 
-    records = {'posts': posts, 'categories': categories}
+    records = {'posts': posts, 'categories': categories,
+               'final_posts': final_posts, 'total_pagelist': [n+1 for n in range(total_pages)]}
     return render(request, "blog/home.html", records)
 
 

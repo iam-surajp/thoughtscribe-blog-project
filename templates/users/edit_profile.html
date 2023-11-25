@@ -1,0 +1,41 @@
+{%extends "blog/base.html"%} {%block title%}Profile Page{%endblock%}
+<!-- Set up your HTML -->
+{%load crispy_forms_tags%}
+<!-- Set up your HTML -->
+{% block content%}
+
+   <div class="container" style="text-align:center">
+    <h5>
+    Edit Profile Information
+    </h5></br>
+   </div>
+        
+    </div>
+        <div class="container">
+          <div class="row shadow" style="height:400px;padding:15px">
+            <div class="col-md-4">
+                <img
+                class="img-thumbnail"
+                src="{{ user.profilemodel.image.url }}"
+                alt=""
+                />
+            </div>
+            <div class="col-md-8">
+                <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %} {{ u_form|crispy }} {{ p_form|crispy }}
+                <div class="container">
+                    
+                    <button type="submit" class="btn btn-primary btn-sm">
+                    Save
+                    </button>
+                    <a href="/profile" class="btn btn-secondary btn-sm"
+                    style="margin-left:10px;background-color:Tomato">
+                        Cancel
+                      </a>
+                </div>
+                </form>
+            </div>
+          </div>
+        </div>
+    </div>
+{%endblock%}
