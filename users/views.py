@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import SignUpForm, UserUpdateForm, ProfileUpdateForm
-from blog.models import categoryModel
+from blog.models import categoryModel, blogpostModel
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
@@ -24,8 +24,8 @@ def sign_up(request):
 @login_required
 def profile(request):
     categories = categoryModel.objects.all()
-
-    return render(request, 'users/profile.html', {'categories': categories})
+    blogposts = blogpostModel.objects.all()
+    return render(request, 'users/profile.html', {'categories': categories, 'posts': blogposts})
 
 
 @login_required

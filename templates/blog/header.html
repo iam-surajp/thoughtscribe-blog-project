@@ -1,17 +1,15 @@
 {% load static %} <link rel="stylesheet" href="{% static "css/style.css"%}">
 
-
-
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content">
   {%for cat in categories %}
-  <li><a href="/category/{{cat.c_id}}">{{cat.title}}</a></li>
+  <li><a href="/category/{{cat.c_id}}" class='text-decoration-none'>{{cat.title}}</a></li>
   {%endfor%}
 </ul>
 
 <ul id="dropdown2" class="dropdown-content">
-  <li><a href="{%url 'users-profile'%}">See Profile</a></li>
-  <li><a href="{%url 'users-logout'%}">Logout</a></li>
+  <li><a href="{%url 'users-profile'%}" class='text-decoration-none'>See Profile</a></li>
+  <li><a href="{%url 'users-logout'%}" class='text-decoration-none'>Logout</a></li>
 </ul>
 
 <nav class="nav-bg" style="background-color:rgb(154, 19, 57);">
@@ -19,17 +17,17 @@
   <div class="container" title="nav_container">
     {%if request.user.is_authenticated%}
     <div class="nav-wrapper">
-      <a href="#!" class="brand-logo">ThoughtScribe</a>
+      <a href="#!" class="brand-logo text-decoration-none">ThoughtScribe</a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="/home">Home</a></li>
-        <li><a href="/create_post">Create blog</a></li>
+        <li><a href="/home" class='text-decoration-none'>Home</a></li>
+        <li><a href="/create_post" class='text-decoration-none'>Create blog</a></li>
         <li>
-          <a class="dropdown-trigger" href="#!" data-target="dropdown1"
+          <a class="dropdown-trigger text-decoration-none" href="#!" data-target="dropdown1"
             >Categories<i class="material-icons right">arrow_drop_down</i></a
           >
         </li>
         <li>
-          <a class="dropdown-trigger" href="#!" data-target="dropdown2"
+          <a class="dropdown-trigger text-decoration-none" href="#!" data-target="dropdown2"
             >Profile<i class="material-icons right">arrow_drop_down</i></a
           >
         </li>
@@ -40,8 +38,8 @@
   <div class="nav-wrapper">
     <a href="#!" class="brand-logo">ThoughtScribe</a>
     <ul class="right hide-on-med-and-down">
-      <li><a href="{% url 'user_sign_up'%}">Signup</a></li>
-      <li><a href="{%url 'users-login'%}">Login</a></li>
+      <li><a href="{% url 'user_sign_up'%}" class='text-decoration-none'>Signup</a></li>
+      <li><a href="{%url 'users-login'%}" class='text-decoration-none'>Login</a></li>
   {%endif%}
   </div>
 

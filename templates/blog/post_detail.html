@@ -3,8 +3,6 @@
 {%load crispy_forms_tags%}
 {%block content%}
 
-
-
 <div class="container" style="margin-botton:40px">
   <div class="card my-3 shadow" style="padding-left:10px;padding-bottom:10px;margin-bottom:50px;background-color:rgb(221, 225, 243);">     
      <div class="card-body"> 
@@ -36,6 +34,10 @@
             <input class="btn btn-primary btn-sm" type="submit" value="Comment">
         </form><br></br>
         <div style="height: 250px; overflow-y: scroll;color:grey;background-color:rgb(42,42,42)" class="card card-body">
+            {%if post.comment_count == 0%}   
+                <h5>No comments yet</h5>
+             </br> 
+            {%endif%}
             {% for comment in post.comments %}
                 <div style='background-color:rgb(190, 184, 186);margin-bottom:5px;padding:5px;border-radius:5px'>   
                    <span style='color:SlateBlue;font-weight:500'> {{comment.user.username}} :-<span>
@@ -49,15 +51,3 @@
 </div>
 
 {%endblock%}
-
-
-
-{% comment %} <div class="row" style="width:100%;color:grey">
-    <div class="col-md-1">
-        {{ comment.user.username }}:
-    </div>
-    <div class="col-md-11">
-        {{ comment.content }}
-    </div>
-</div>
-<hr> {% endcomment %}
