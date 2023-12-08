@@ -17,7 +17,7 @@ class categoryModel(models.Model):
 
 class blogpostModel(models.Model):
     id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=150)
     content = RichTextField(null=True, blank=True)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE)

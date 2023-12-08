@@ -2,59 +2,142 @@
 <!-- Set up your HTML -->
 {%load crispy_forms_tags%}
 <!-- Set up your HTML -->
-{% block content%}
-<div class="container">
-  <div class="row mt-5 pt-3" style="width:100%">
-    <div class="col-md-5 offset--2" style="margin-right:70px;">
-      <div class="card my-3 shadow" style="background-color:rgb(40, 40, 43);color:white">
-        <div class="card-body">
-          <span class="h4" style="color:Tomato">User Profile</span>
-          <span>
-            <!-- Button trigger modal -->
-            <a href="/edit_profile" class="btn btn-sm float-right">
-              Edit Profile
-            </a>
-          </span>
+{% block content %}
 
+<style>
+  .matte-black-background {
+    background-color: #333; /* Matte black color */
+    color: white; /* Text color for better contrast */
+  }
+  .white-hr {
+    border-color: white; /* White color for the horizontal rule */
+  }
+</style>
+
+<div class="container">
+  <div class="row mt-5 pt-3">
+    <!-- Manage Interests Section -->
+    <div class="col-md-4">
+      <div class="card my-3 shadow">
+        <div class="card-body">
+          <h4 class="card-title text-success">Manage Interests</h4>
           <hr />
+          <!-- Display current user interests -->
+          <h6><strong>Your Interests:</strong></h6>
+          {% if interests %} {% for interest in interests %}
+          <span class="badge float-left text-red">{{interest}}</span>
+          </br>
+          {% endfor %} {% else %}
+          <p>No interests</p>
+          {% endif %}
+        </br></br>
+          <!-- Add an edit interests button linking to the user-interests page -->
+          <!-- Button to trigger the popup dialog -->
+        <button class="btn btn-sm btn-success mt-3" onclick="openDialog()">Edit Interests</button>
+<!-- Dialog for editing interests -->
+<dialog id="editInterestsDialog" class="container" style="max-width: 400px;">
+  <div class="card my-3 shadow">
+      <div class="card-header bg-primary text-white">
+          <h6 class="text-center">Update Interests</h6>
+      </div>
+      <div class="card-body">
+          {% if form2.interests.errors %}
+              <div class="alert alert-danger">
+                  <ul class="errorlist">
+                      {% for error in form2.interests.errors %}
+                          <li>{{ error }}</li>
+                      {% endfor %}
+                  </ul>
+              </div>
+          {% endif %}
+          <div class="container" id="interests">
+              <form method="post" action="{% url 'manage-interests' %}">
+                  {% csrf_token %} 
+                    <!-- Iterate over the form field for interests (assumes it's a CheckboxSelectMultiple) -->
+                    {% for checkbox in form2.interests %}
+                        <div class="form-check">
+                            {{ checkbox }}
+                        </div>
+                    {% endfor %}
+                  <button type="submit" class="btn btn-primary mt-3">Submit</button>
+              </form>
+          </div>
+      </div>
+      <button type="button" onclick="closeDialog()" class="btn btn-sm" style="background-color:tomato">Cancel</button>
+  </div>
+</dialog>
+
+<script>
+  function openDialog() {
+    var dialog = document.getElementById('editInterestsDialog');
+    dialog.showModal();
+  }
+
+  function closeDialog() {
+    var dialog = document.getElementById('editInterestsDialog');
+    dialog.close();
+  }
+</script> 
+      </div>
+      </div>
+    </div>
+
+    <!-- User Profile and Posts Section -->
+    <div class="col-md-8">
+      <!-- User Profile Section -->
+      <div class="card my-3 shadow matte-black-background">
+        <div class="card-body">
+          <h4 class="card-title text-danger">User Profile</h4>
+          <hr class="white-hr" />
           <div class="row">
             <div class="col-md-4">
               <img
-                class="img-thumbnail"
-                style="height:80px;border-radius:50px"
+                class="img-thumbnail rounded-circle"
+                style="height: 80px"
                 src="{{ user.profilemodel.image.url }}"
                 alt="profile-img"
               />
             </div>
             <div class="col-md-8">
-              <h6>Username: {{ user.username }}</h6>
-              <h6>Email: {{ user.email }}</h6>
+              <h6><strong>Username:</strong> {{ user.username }}</h6>
+              <h6><strong>Email:</strong> {{ user.email }}</h6>
+              <!-- Add more profile details as needed -->
             </div>
           </div>
+          <a
+            href="/edit_profile"
+            class="btn btn-sm btn-primary float-right mt-3"
+            >Edit Profile</a>
         </div>
       </div>
-    </div>
-    <div class="col-md-6 offset--1" >
-      <div class="card my-3 shadow" style="height:500px;overflow-y:scroll">
+
+      <!-- Posts Created by User Section -->
+      <div class="card my-3 shadow">
         <div class="card-body">
-          <span class="h4">Posts created by you</span>
+          <h4 class="card-title">Posts Created by You</h4>
           <hr />
-          {% for post in posts%} {% if post.author == request.user%}
-            <div class="row">
-              <div class="col-md-4">
-                <img src={{post.pictures.url}} alt="img" class="img-thumbnail" style="width:70px;height:70px"></br>
-              </div>
-             
-              <div class="col-md-6">
-                <a href="/blog/{{post.id}}" class="text-blue">{{ post.title }}</a>
-              </div></br>              
+          {% for post in posts %} {% if post.author == request.user %}
+          <div class="media mb-3">
+            <img
+              src="{{ post.pictures.url }}"
+              class="mr-3 img-thumbnail"
+              alt="img"
+              style="width: 70px; height: 70px"
+            />
+            <div class="media-body">
+              <h5 class="mt-0">
+                <a href="/blog/{{ post.id }}" class="text-primary"
+                  >{{ post.title }}</a
+                >
+              </h5>
+              <p>{{ post.date }}</p>
             </div>
-            <hr style="width:50%">
-          {%endif%} {%endfor%}         
           </div>
+          <hr />
+          {% endif %} {% endfor %}
         </div>
       </div>
     </div>
   </div>
 </div>
-{%endblock%}
+{% endblock %}

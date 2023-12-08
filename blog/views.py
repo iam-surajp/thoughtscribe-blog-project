@@ -3,24 +3,53 @@ from blog.models import blogpostModel, categoryModel
 from .forms import blogpostForm, PostUpdateForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-
+from users.models import interestModel
+from random import shuffle
 # Create your views here.
 
 
 @login_required
 def home(request):
-    # loading data from database to print it on homepage
-    posts = blogpostModel.objects.all()
+    # Get the user's interests
+    user_interests = []
+    if request.user.is_authenticated:
+        # Step 1: Retrieve user's interests
+        user_interests = interestModel.objects.filter(
+            user=request.user).values_list('interests__title', flat=True)
 
-    paginator = Paginator(posts, 7)
+    # Step 2: Retrieve associated category IDs
+    category_ids = interestModel.objects.filter(
+        user=request.user
+    ).values_list('interests__title', flat=True)
+
+    # Step 3: Filter blog posts based on user interests
+    if user_interests is not None and user_interests:  # Check if user_interests is not an empty list
+        posts_in_interests = blogpostModel.objects.filter(
+            category__title__in=user_interests
+        )
+        # Shuffle the list of posts_in_interests
+        shuffled_posts_in_interests = list(posts_in_interests)
+        shuffle(shuffled_posts_in_interests)
+    elif not user_interests:
+        shuffled_posts_in_interests = list(blogpostModel.objects.all())
+        print("User has no selected interests. All posts will be displayed.")
+
+    # Get other posts
+    other_posts = blogpostModel.objects.exclude(
+        category__title__in=user_interests
+    )
+
+    # Combine posts in interests and other posts
+    all_posts = shuffled_posts_in_interests + list(other_posts)
+
+    paginator = Paginator(all_posts, 7)
     page_number = request.GET.get('page')
     final_posts = paginator.get_page(page_number)
     total_pages = final_posts.paginator.num_pages
 
     categories = categoryModel.objects.all()
-    # print(posts)
 
-    records = {'posts': posts, 'categories': categories,
+    records = {'posts': all_posts, 'categories': categories,
                'final_posts': final_posts, 'total_pagelist': [n+1 for n in range(total_pages)]}
     return render(request, "blog/home.html", records)
 
@@ -72,7 +101,6 @@ def create_post(request):
         # messages.success(request,'Data has been submitted')
         # instance.author = request.user
         # instance.save()
-        print('run successs')
         return redirect('home-page')
     else:
         form = blogpostForm()

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Interests</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: tomato;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      #maindiv {
+        background-color: rgba(256, 256, 256, 0.6);
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 500px;
+        height:95vh;
+        text-align: center;
+        
+      }
+
+      #interests{
+        overflow-y: auto;
+        max-height:300px;
+        margin:0;
+      }
+
+      h1 {
+        color: #3498db;
+      }
+
+      h2 {
+        color: #555;
+        margin-top: 10px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      label {
+        margin-top: 10px;
+        margin-bottom:10px;
+        color: #333;
+        font-weight: bold;
+        color:Indigo;
+      }
+
+      input {
+        margin-top: 20px;
+        padding: 8px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      button {
+        margin-top: 15px;
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background-color: #2980b9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="maindiv">
+      <h1>Welcome to ThoughtScribe</h1>
+      <h2>Let us know your interests</h2>
+      {% if form.interests.errors %}
+        <ul class="errorlist">
+          {% for error in form.interests.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      <div class="container" id="interests">
+      <form method="post" action="{% url 'user-interests' %}">
+          {% csrf_token %} {{ form.interests }}
+        </div>
+        <br /><br />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>

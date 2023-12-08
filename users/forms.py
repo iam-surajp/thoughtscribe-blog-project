@@ -2,7 +2,8 @@ from typing import Any
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import profileModel
+from .models import profileModel, interestModel
+from blog.models import categoryModel
 
 
 def validate_characters(value):
@@ -44,3 +45,17 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = profileModel
         fields = ['image']
+
+
+class UserInterestForm(forms.ModelForm):
+    interests = forms.ModelMultipleChoiceField(
+        queryset=categoryModel.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        error_messages={
+            'required': 'Please tell us your interests. This field cannot be empty.'
+        }
+    )
+
+    class Meta:
+        model = interestModel
+        fields = ['interests']

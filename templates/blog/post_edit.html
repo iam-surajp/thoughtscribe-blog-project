@@ -7,7 +7,7 @@
       <div class="card my-3 shadow">
         <div class="card-body">
           <form method="POST">
-            {% csrf_token %} {{ form|crispy }}
+            {% csrf_token %} {{form.media}}{{ form|crispy }}
             <span><input class="btn btn-primary btn-sm" type="submit" value="Save" />
             <span><a class="btn btn-primary btn-sm" href="/blog/{{post.id}}" style="background-color:rgb(208, 30, 48);">Cancel</a></span>
           </form>
