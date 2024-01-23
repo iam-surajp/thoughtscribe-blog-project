@@ -42,7 +42,7 @@ def home(request):
     # Combine posts in interests and other posts
     all_posts = shuffled_posts_in_interests + list(other_posts)
 
-    paginator = Paginator(all_posts, 7)
+    paginator = Paginator(all_posts, 6)
     page_number = request.GET.get('page')
     final_posts = paginator.get_page(page_number)
     total_pages = final_posts.paginator.num_pages
